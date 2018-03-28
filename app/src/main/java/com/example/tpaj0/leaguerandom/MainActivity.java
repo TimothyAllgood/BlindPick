@@ -2,13 +2,20 @@ package com.example.tpaj0.leaguerandom;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.graphics.LinearGradient;
+import android.graphics.Shader;
 import android.os.AsyncTask;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.InterstitialAd;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -22,12 +29,14 @@ import java.util.concurrent.ExecutionException;
 
 public class MainActivity extends AppCompatActivity {
     int randomChamp = 0;
+    int counter = 0;
     String[] champs;
     String[] champName;
     Bitmap splashImage;
     ImageView imageView;
     TextView nameTextView;
     TextView titleTextView;
+    private InterstitialAd mInterstitialAd;
     public class DownloadTask extends AsyncTask<String,Void,String[]> {
 
         @Override
@@ -163,6 +172,20 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void rerollChamp (View view){
+
+        counter++;
+        Log.i("counter", Integer.toString(counter));
+        if (counter == 10) {
+        if (mInterstitialAd.isLoaded()) {
+            mInterstitialAd.show();
+        } else {
+            Log.d("TAG", "The interstitial wasn't loaded yet.");
+        }
+        counter = 0;
+
+        }
+
+
         try {
             randomChampion();
         } catch (ExecutionException e) {
@@ -180,6 +203,12 @@ public class MainActivity extends AppCompatActivity {
         imageView = findViewById(R.id.imageView);
         nameTextView = findViewById(R.id.nameTextView);
         titleTextView =findViewById(R.id.titleTextView);
+        int[] color = {Color.rgb(204,145,43),Color.rgb(244, 219, 115)};
+        float[] position = {0, 1};
+        Shader.TileMode tile_mode = Shader.TileMode.MIRROR; // or TileMode.REPEAT;
+        LinearGradient lin_grad = new LinearGradient(0, 0, 0, 50,color,position, tile_mode);
+        nameTextView.getPaint().setShader(lin_grad);
+        titleTextView.getPaint().setShader(lin_grad);
 
         DownloadTask task = new DownloadTask();
         try {
@@ -192,6 +221,17 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
+        mInterstitialAd= new InterstitialAd(this);
+        mInterstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
+        mInterstitialAd.loadAd(new AdRequest.Builder().build());
 
+        mInterstitialAd.setAdListener(new AdListener() {
+            @Override
+            public void onAdClosed() {
+                // Load the next interstitial.
+                mInterstitialAd.loadAd(new AdRequest.Builder().build());
+            }
+
+        });
     }
 }

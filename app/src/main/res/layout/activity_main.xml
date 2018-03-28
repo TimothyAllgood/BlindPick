@@ -19,30 +19,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/button"
-        android:layout_width="150dp"
-        android:layout_height="75dp"
-        android:layout_marginBottom="50dp"
-        android:onClick="rerollChamp"
-        android:padding="10dp"
-        android:text="Choose New Champion"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent" />
-
     <TextView
         android:id="@+id/nameTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
-        android:text="TextView"
-        android:textColor="@android:color/white"
         android:shadowColor="@android:color/black"
         android:shadowDx="3"
         android:shadowDy="3"
         android:shadowRadius="1"
+        android:text="TextView"
+        android:textColor="@android:color/white"
         android:textSize="48sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -54,15 +41,30 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="TextView"
-        android:textColor="@android:color/white"
         android:shadowColor="@android:color/black"
         android:shadowDx="3"
         android:shadowDy="3"
         android:shadowRadius="1"
+        android:text="TextView"
+        android:textColor="@android:color/white"
         android:textSize="32sp"
         android:textStyle="italic"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/nameTextView" />
+
+    <ImageButton
+        android:id="@+id/imageButton2"
+        android:layout_width="145dp"
+        android:layout_height="57dp"
+        android:layout_marginBottom="50dp"
+        android:adjustViewBounds="false"
+        android:cropToPadding="false"
+        android:onClick="rerollChamp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/button" />
+
 </android.support.constraint.ConstraintLayout>
